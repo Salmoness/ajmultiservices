@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": ["*"]
+    },
+    "jsx": "react-jsx",
+    "allowJs": true,                // let .js and .jsx files work
+    "checkJs": false,               // don't type-check .js files unless you want it
+    "isolatedModules": true,
+    "noEmit": true,
+  },
+  "include": ["src"]
+}
