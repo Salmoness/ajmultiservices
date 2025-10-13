@@ -9,11 +9,11 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve static React build files
-app.use(express.static(path.join(__dirname, "../ajmultiservices/build")));
+app.use(express.static(path.join(__dirname, "../ajmultiservices/dist")));
 
-// React Router fallback
+// React Router handles all other routes
 app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "../ajmultiservices/build/index.html"));
+  res.sendFile(path.join(__dirname, "../ajmultiservices/dist/index.html"));
 });
 
 app.listen(PORT, () => {
