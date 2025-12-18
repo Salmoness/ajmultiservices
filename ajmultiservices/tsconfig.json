@@ -1,14 +1,27 @@
 {
   "compilerOptions": {
-    "baseUrl": "./src",
-    "paths": {
-      "@/*": ["*"]
-    },
-    "jsx": "react-jsx",
-    "allowJs": true,                // let .js and .jsx files work
-    "checkJs": false,               // don't type-check .js files unless you want it
+    "target": "ES2020",
+    "useDefineForClassFields": true,
+    "lib": [
+      "ES2020",
+      "DOM",
+      "DOM.Iterable"
+    ],
+    "module": "ESNext",
+    "skipLibCheck": true,
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
+    "jsx": "react-jsx",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "src/*"
+      ]
+    }
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

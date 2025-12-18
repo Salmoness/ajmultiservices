@@ -1,66 +1,15 @@
-"use client";
 import * as React from "react";
 import { cn } from "@/lib/utils";
-import { useSpring, useMotionTemplate, useMotionValue, motion } from "motion/react";
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
-
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
-  const [visible, setVisible] = React.useState(false);
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  // radius will smoothly spring between 0 and 150 when visible toggles
-  const rawRadius = useMotionValue(0);
-  const radius = useSpring(rawRadius, { stiffness: 90, damping: 9 });
-
-  function handleMouseMove(e: React.MouseEvent<HTMLDivElement>) {
-    const { left, top } = e.currentTarget.getBoundingClientRect();
-    mouseX.set(e.clientX - left);
-    mouseY.set(e.clientY - top);
-  }
-
-  function handleMouseEnter() {
-    rawRadius.set(150); // expand
-    setVisible(true);
-  }
-
-  function handleMouseLeave() {
-    rawRadius.set(0); // contract
-    setVisible(false);
-  }
-
-    return (
-      <motion.div
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              ${radius}px circle at ${mouseX}px ${mouseY}px,
-              #3b82f6,
-              transparent 80%
-            )
-          `,
-        }}
-        onMouseMove={handleMouseMove}
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        className="group/input p-[2px] transition duration-300"
-      >
-        <input
-          type={type}
-          className={cn(
-            `shadow-input dark:placeholder-text-neutral-600 flex h-12 w-full border-none bg-gray-50 px-3 py-2 text-lg text-black transition duration-400 group-hover/input:shadow-none file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-neutral-400 focus-visible:ring-[2px] focus-visible:ring-neutral-400 focus-visible:outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:bg-zinc-800 dark:text-white dark:shadow-[0px_0px_1px_1px_#404040] dark:focus-visible:ring-neutral-600`,
-            className,
-          )}
-          ref={ref}
-          {...props}
-        />
-      </motion.div>
-    );
-  },
-);
+export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {}
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(({ className, ...props }, ref) => (
+  <input
+    ref={ref}
+    className={cn(
+      "h-11 w-full rounded-[--radius] border border-[--line] bg-white px-4 text-[--ink] placeholder:text-slate-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--brand]",
+      className
+    )}
+    {...props}
+  />
+));
 Input.displayName = "Input";
-
-export { Input };
