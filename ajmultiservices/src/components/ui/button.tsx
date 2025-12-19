@@ -4,12 +4,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center shadow-sm whitespace-nowrap rounded-[--radius] text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--brand] disabled:pointer-events-none disabled:opacity-50",
+  "inline-flex items-center justify-center shadow-md whitespace-nowrap rounded-[--radius] text-sm font-semibold transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[--brand] disabled:pointer-events-none disabled:opacity-50",
   {
     variants: {
       variant: {
         primary: "bg-[--brand] text-white hover:bg-[--brand-600] active:translate-y-px",
-        accent: "bg-[--accent] text-white hover:bg-red-600 active:translate-y-px",
+        accent: "bg-[#362118] text-[#fffcf2] hover:bg-red-600 active:translate-y-px",
         outline: "border border-[--line] bg-white text-[--ink] hover:bg-slate-50",
         link: "bg-transparent text-[--brand] underline-offset-4 hover:underline",
       },

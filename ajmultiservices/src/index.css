@@ -14,7 +14,9 @@
 @import "tailwindcss/preflight.css" layer(base);
 @import "tailwindcss/utilities.css" layer(utilities);
 
-.container-edge { @apply mx-auto max-w-6xl px-4 sm:px-6 lg:px-8; }
+.container-edge { @apply mx-auto max-w-400 px-4 sm:px-6 lg:px-8; }
+.container-edge-freewidth { @apply mx-auto px-4 sm:px-6 lg:px-8; }
+
 .section { @apply py-14; }
 .kicker { @apply text-sm font-semibold tracking-wide text-[--brand]; }
 .h2 { @apply text-3xl font-bold text-[--ink]; }
@@ -22,15 +24,20 @@
 
 .hero {
   min-height: 100vh;
-  background: url("/hero.jpg") center / cover no-repeat;
+  background-image: url("https://images.pexels.com/photos/48828/pexels-photo-48828.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   position: relative;
 }
+
 .hero::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.55); /* dark overlay */
+  background: rgba(15, 23, 42, 0.55);
 }
+
 .hero-inner {
   position: relative;
   z-index: 1;

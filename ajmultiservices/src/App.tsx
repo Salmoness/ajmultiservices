@@ -19,7 +19,7 @@ type QuoteInput = z.infer<typeof QuoteSchema>;
 
 function TopBar() {
   return (
-    <div className="border-b border-[--line] bg-white">
+    <div className="border-b border-[--line] bg-[#fff4e7]">
       <div className="container-edge flex flex-wrap items-center justify-between gap-3 py-2 text-sm">
         <div className="flex flex-wrap items-center gap-4 text-slate-600">
           <a className="inline-flex items-center gap-2 hover:text-[--ink]" href="tel:+14075550123"><Phone className="h-4 w-4" /> (407) 555-0123</a>
@@ -42,7 +42,7 @@ function Nav() {
     { href: "#quote", label: "Get a Quote" },
   ];
   return (
-    <header className="sticky top-0 z-50 border-b border-[--line] bg-white/95 backdrop-blur">
+    <header className="sticky top-0 z-50 border-b border-[--line] bg-[#fff4e7]/90 backdrop-blur">
       <div className=" flex items-center justify-between py-4 px-8">
         <a href="#" className="flex items-center gap-3">
           <div>
@@ -120,7 +120,7 @@ function Hero() {
           </div>
 
           {/* Right: “Need pricing fast?” card */}
-          <div className="m-auto w-full h-full bg-white/15 p-6 text-white backdrop-blur-sm items-center">
+          <div className="m-auto w-full h-full bg-white/15 p-6 text-white/15 backdrop-blur-sm items-center">
             <p className="text-sm font-bold">Need pricing fast?</p>
             <p className="mt-1 text-sm text-white/75">
               Call or send a request—same-day response.
@@ -156,43 +156,53 @@ function Hero() {
 
 function Services() {
   return (
-    <section id="services" className="section">
-      <div className="container-edge">
-        <div className="max-w-2xl">
+    <section id="services" className="section bg-[#fff6e8]">
+      <div className="container-edge-freewidth flex flex-col items-center px-4">
+        <div className="max-w-3xl">
           <p className="kicker">Services</p>
           <h2 className="h2 mt-1">Painting services we offer</h2>
           <p className="p mt-3">From single rooms to full exteriors—our process is built around prep, protection, and clean finishing.</p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {services.map((s) => (
-            <Card key={s.title}>
-              <CardHeader>
-                <CardTitle>{s.title}</CardTitle>
-                <CardDescription>
-                  <ul className="mt-3 grid gap-2">
-                    {s.bullets.map((b) => (
-                      <li key={b} className="flex items-start gap-2 text-[15px] leading-5 text-slate-600">
-                        <Check className="mt-0.5 h-4 w-4 text-[--brand]" /> {b}
-                      </li>
-                    ))}
-                  </ul>
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <Button variant="link" asChild><a href="#quote">Request pricing</a></Button>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="mt-10 flex flex-col md:flex-row w-full md:justify-center">
+          {services.map((s) => {  
+            const Icon = s.icon;
+            return (
+              <Card key={s.title} className="mx-12 my-6 flex-1 flex-row md:max-w-md p-4 shadow-md backdrop-blur-sm bg-amber-900/14 border-none">
+                <div className="flex flex-1 h-full">
+                  <CardHeader className="pb-8 px-6">   
+                    <CardTitle>{s.title}</CardTitle>
+                    <CardDescription >
+                      <ul className="mt-3 grid space-y-3">
+                        {s.bullets.map((b) => (
+                          <li key={b} className="flex items-start gap-2 text-[15px] leading-6 text-slate-600">
+                            <Check className="mt-0.5 h-4 w-4 shrink-0" /> {b}
+                          </li>
+                        ))}
+                      </ul>
+                    </CardDescription>
+                  </CardHeader>
+                  <div className="flex flex-col justify-around items-center m-0 p-0">
+                    <CardContent className="flex justify-center items-center m-0 p-0">
+                      <Icon className=" h-32 w-32 text-[--brand]" />
+                    </CardContent>
+                    <CardContent className="pb-0">
+                      <Button variant="link" className="bg-[#fff8e8]" asChild><a href="#quote">Request pricing</a></Button>
+                    </CardContent>
+                  </div>
+                </div>
+              </Card>
+            );
+          })}
         </div>
 
-        <div className="mt-10 rounded-[--radius] border border-[--line] bg-slate-50 p-6">
+        <div className="mt-10 ">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
+            <div className="">
               <div className="text-lg font-extrabold text-[--ink]">Ready to start?</div>
-              <div className="text-sm text-slate-600">Send details and we’ll follow up with next steps.</div>
+              <div className="text-sm text-slate-600">Send details and we'll follow up with next steps.</div>
             </div>
-            <Button variant="accent" asChild><a href="#quote">Get a free quote</a></Button>
+            <Button variant="accent" asChild className="ml-16"><a href="#quote">Get a free quote</a></Button>
           </div>
         </div>
       </div>
@@ -202,18 +212,18 @@ function Services() {
 
 function About() {
   return (
-    <section id="about" className="section bg-slate-50 border-y border-[--line]">
+    <section id="about" className="section bg-[#362118] border-y border-[--line]">
       <div className="container-edge grid gap-10 md:grid-cols-2 md:items-center">
-        <div>
+        <div className="text-[#fffcf2]">
           <p className="kicker">About</p>
           <h2 className="h2 mt-1">A simple, professional process</h2>
-          <p className="p mt-3">
+          <p className=" mt-3">
             We focus on doing the basics extremely well: prep the surface properly, protect floors and furniture, apply durable coatings,
             and finish with a clean site. You get a job that looks sharp—and stays sharp.
           </p>
           <div className="mt-6 grid gap-3">
             {["1) Quick estimate", "2) Prep & protect", "3) Paint & finish", "4) Final walk-through"].map((t) => (
-              <div key={t} className="flex items-start gap-2 text-sm text-slate-700">
+              <div key={t} className="flex items-start gap-2">
                 <Check className="mt-0.5 h-4 w-4 text-[--brand]" /> {t}
               </div>
             ))}
@@ -229,7 +239,7 @@ function About() {
 
 function Work() {
   return (
-    <section id="work" className="section">
+    <section id="work" className="section bg-[#fff6e8]">
       <div className="container-edge">
         <div className="max-w-2xl">
           <p className="kicker">Gallery</p>
@@ -254,7 +264,7 @@ function Work() {
 
 function Reviews() {
   return (
-    <section id="reviews" className="section bg-white">
+    <section id="reviews" className="section bg-[#fff6e8]">
       <div className="container-edge">
         <div className="max-w-2xl">
           <p className="kicker">Reviews</p>
@@ -297,13 +307,13 @@ function Quote() {
   };
 
   return (
-    <section id="quote" className="section border-t border-[--line] bg-slate-50">
-      <div className="container-edge grid gap-10 md:grid-cols-2">
-        <div>
+    <section id="quote" className="section border-t border-[--line] bg-[#362118]">
+      <div className="container-edge-freewidth w-[65%] grid gap-10 md:grid-cols-2">
+        <div className="text-[#fffcf2] flex flex-col items-left justify-center">
           <p className="kicker">Get a free quote</p>
-          <h2 className="h2 mt-1">Tell us about your project</h2>
-          <p className="p mt-3">Include room sizes, surfaces, and your timeline. If you have photos, mention it and we’ll request them.</p>
-          <div className="mt-6 grid gap-3 text-sm text-slate-700">
+          <h2 className="text-5xl font-extrabold spacing mt-1">Tell us about your project</h2>
+          <p className="text-md mt-4">Include room sizes, surfaces, and your timeline. If you have photos, mention it and we’ll request them.</p>
+          <div className="mt-8 grid gap-3 text-sm">
             <a className="inline-flex items-center gap-2 hover:text-[--ink]" href="tel:+14075550123"><Phone className="h-4 w-4" /> (407) 555-0123</a>
             <a className="inline-flex items-center gap-2 hover:text-[--ink]" href="mailto:quotes@ajmultiservices.com"><Mail className="h-4 w-4" /> quotes@ajmultiservices.com</a>
             <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4" /> Orlando, FL</span>
@@ -342,8 +352,8 @@ function Quote() {
 
 function Footer() {
   return (
-    <footer className="border-t border-[--line] bg-white">
-      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-slate-600">
+    <footer className="border-t border-[--line] bg-[#fffcf2]">
+      <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-[#63584b]">
         <div className="flex md:flex-row justify-between">
           <div>
             <div className="text-base font-extrabold text-[--ink]">AJ Multiservices</div>
@@ -382,6 +392,8 @@ export default function App() {
       <TopBar />
       <Nav />
       <Hero />
+      <div className="h-16 bg-linear-to-r from-[#362118] to-[#a37313]">
+      </div>
       <Services />
       <About />
       <Work />

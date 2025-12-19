@@ -1,11 +1,15 @@
-export type Service = { title: string; bullets: string[]; };
+import { LuPaintRoller } from "react-icons/lu";
+import { PiBuildingOffice } from "react-icons/pi";
+import { LuHouse } from "react-icons/lu";
+
+export type Service = { title: string; icon: any; bullets: string[]; };
 export type Project = { id: string; title: string; image: string; };
 export type Review = { id: string; name: string; text: string; rating: number; };
 
 export const services: Service[] = [
-  { title: "Residential Painting", bullets: ["Interior walls & ceilings", "Trim, doors, baseboards", "Drywall repairs & patching", "Color matching"] },
-  { title: "Exterior Painting", bullets: ["Stucco & siding", "Fascia, soffits & shutters", "Surface prep & sealing", "Weather-resistant coatings"] },
-  { title: "Commercial Painting", bullets: ["Offices & retail", "After-hours scheduling", "Durable finishes", "Fast turnarounds"] },
+  { title: "Residential Painting", icon: PiBuildingOffice, bullets: ["Interior walls & ceilings", "Trim, doors, baseboards", "Drywall repairs & patching", "Color matching"] },
+  { title: "Exterior Painting", icon: LuPaintRoller, bullets: ["Stucco & siding", "Fascia, soffits & shutters", "Surface prep & sealing", "Weather-resistant coatings"] },
+  { title: "Commercial Painting", icon: LuHouse, bullets: ["Offices, retail & warehouses", "After-hours scheduling", "Durable finishes", "Fast & efficient turnarounds"] },
 ];
 
 export const projects: Project[] = [
