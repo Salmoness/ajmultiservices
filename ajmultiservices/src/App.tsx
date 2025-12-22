@@ -17,21 +17,6 @@ const QuoteSchema = z.object({
 });
 type QuoteInput = z.infer<typeof QuoteSchema>;
 
-function TopBar() {
-  return (
-    <div className="border-b border-[--line] bg-[#fff4e7]">
-      <div className="container-edge flex flex-wrap items-center justify-between gap-3 py-2 text-sm">
-        <div className="flex flex-wrap items-center gap-4 text-slate-600">
-          <a className="inline-flex items-center gap-2 hover:text-[--ink]" href="tel:+14075550123"><Phone className="h-4 w-4" /> (407) 555-0123</a>
-          <a className="inline-flex items-center gap-2 hover:text-[--ink]" href="mailto:quotes@ajmultiservices.com"><Mail className="h-4 w-4" /> quotes@ajmultiservices.com</a>
-          <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4" /> Orlando, FL</span>
-        </div>
-        <span className="text-slate-500">Free quotes • Licensed & insured</span>
-      </div>
-    </div>
-  );
-}
-
 function Nav() {
   const [open, setOpen] = useState(false);
   const links = [
@@ -42,23 +27,27 @@ function Nav() {
     { href: "#quote", label: "Get a Quote" },
   ];
   return (
-    <header className="sticky top-0 z-50 border-b border-[--line] bg-[#fff4e7]/90 backdrop-blur">
-      <div className=" flex items-center justify-between py-4 px-8">
+    <header className="sticky top-0 z-50 borderb h-32 bg-[#F5F2F2]/70 backdrop-blur">
+      <div className=" flex items-center justify-between px-8 h-full">
         <a href="#" className="flex items-center gap-3">
-          <div>
-            <div className="text-3xl font-extrabold leading-none text-[--ink]">AJ Multiservices</div>
-            <div className="text-sm tracking-widest text-slate-500 text-center">Interior & Exterior Painting</div>
+          <div className="flex items-center gap-3">
+            <img src="@/../public/logo.png" alt="" className="h-32 opacity-75"/>
+            <div>
+              <div className="text-4xl font-extrabold leading-none text-[#2B2A2A]">AJ Multiservices</div>
+              <div className="text-md tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
+            </div>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-7 md:flex">
-          {links.map(l => <a key={l.href} className="text-sm font-semibold text-slate-700 hover:text-[--ink]" href={l.href}>{l.label}</a>)}
+        <nav className="hidden items-center gap-4 h-full md:flex">
+          {links.map(l => <a key={l.href} className="h-32 w-[98px] flex justify-center items-center text-md font-semibold text-[#2B2A2A] bg-transparent transition-all duration-300 ease-in-out hover:bg-[#2B2A2A]/7 hover:text-[#000000]" href={l.href}>{l.label}</a>)}
         </nav>
 
-        <div className="w-[250px]">
-          <Button variant="accent" asChild className="hidden md:flex"><a href="#quote">Get a free quote</a></Button>
-        </div>
 
+        <div className="w-[450px] flex justify-center">
+          <Button variant="accent" asChild className="hidden md:flex md:min-w-2xs md:min-h-14"><a href="#quote">Get a free quote</a></Button>
+        </div>
+        
         <button className="md:hidden rounded-[--radius] border border-[--line] p-2" onClick={() => setOpen(v => !v)} aria-label="Menu">
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
@@ -79,8 +68,8 @@ function Nav() {
 function Hero() {
   return (
     
-    <section className="hero">
-      <div className="hero-inner flex min-h-screen items-center justify-center py-20 ">
+    <section className="hero relative min-h-screen -mt-32 pt-20">
+      <div className="hero-inner flex min-h-screen items-center justify-center -translate-y-24 py-20">
         <div className="grid w-full max-w-7xl gap-64 md:grid-cols-2 md:items-center">
           {/* Left: centered-ish text (like screenshot) */}
           <div className="text-center md:text-left md:max-w-lg">
@@ -93,18 +82,14 @@ function Hero() {
               homes & businesses
             </h1>
 
-            <p className="mx-auto mt-4 max-w-xl text-[15px] leading-7 text-white/80 md:mx-0">
+            <p className="mx-auto mt-10 max-w-xl text-[15px] leading-7 text-white/80 md:mx-0">
               A “done-right” crew for interior and exterior projects. We prep carefully,
               protect your space, and finish clean — so the result looks great and lasts.
             </p>
 
-            <div className="mt-7 flex flex-wrap justify-center gap-3 md:justify-start">
-              <Button asChild className="bg-gray-400 text-white"><a href="#quote">Request a quote</a></Button>
-              <Button variant="outline" asChild><a href="#services">View services</a></Button>
-            </div>
 
             {/* Checklist */}
-            <div className="mt-8 grid gap-3 text-left sm:grid-cols-2">
+            <div className="mt-14 grid gap-3 text-left sm:grid-cols-2">
               {[
                 "Neat & respectful crew",
                 "Surface prep + repairs",
@@ -120,8 +105,8 @@ function Hero() {
           </div>
 
           {/* Right: “Need pricing fast?” card */}
-          <div className="m-auto w-full h-full bg-white/15 p-6 text-white/15 backdrop-blur-sm items-center">
-            <p className="text-sm font-bold">Need pricing fast?</p>
+          <div className="m-auto w-full h-full bg-white/15 p-6 text-white/80 backdrop-blur-sm items-center">
+            <p className="text-md font-bold">Need pricing fast?</p>
             <p className="mt-1 text-sm text-white/75">
               Call or send a request—same-day response.
             </p>
@@ -129,7 +114,7 @@ function Hero() {
             <div className="mt-5 grid gap-3">
               <a
                 href="tel:+14075550123"
-                className=" bg-[#ffffff] px-4 py-3 text-center text-sm font-semibold text-slate-900 hover:opacity-85"
+                className=" bg-[#eeec7e] px-4 py-3 text-center text-sm font-semibold text-slate-900 hover:opacity-85"
               >
                 Call (407) 555-0123
               </a>
@@ -156,8 +141,8 @@ function Hero() {
 
 function Services() {
   return (
-    <section id="services" className="section bg-[#fff6e8]">
-      <div className="container-edge-freewidth flex flex-col items-center px-4">
+    <section id="services" className="section bg-[#F5F2F2] backdrop-blur-sm">
+      <div className="container-edge-freewidth relative z-1 flex flex-col items-center px-4">
         <div className="max-w-3xl">
           <p className="kicker">Services</p>
           <h2 className="h2 mt-1">Painting services we offer</h2>
@@ -168,7 +153,7 @@ function Services() {
           {services.map((s) => {  
             const Icon = s.icon;
             return (
-              <Card key={s.title} className="mx-12 my-6 flex-1 flex-row md:max-w-md p-4 shadow-md backdrop-blur-sm bg-amber-900/14 border-none">
+              <Card key={s.title} className="mx-12 my-6 flex-1 flex-row md:max-w-md p-4 shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
                 <div className="flex flex-1 h-full">
                   <CardHeader className="pb-8 px-6">   
                     <CardTitle>{s.title}</CardTitle>
@@ -187,7 +172,7 @@ function Services() {
                       <Icon className=" h-32 w-32 text-[--brand]" />
                     </CardContent>
                     <CardContent className="pb-0">
-                      <Button variant="link" className="bg-[#fff8e8]" asChild><a href="#quote">Request pricing</a></Button>
+                      <Button variant="link" className="bg-[#F5F2F2]" asChild><a href="#quote">Request pricing</a></Button>
                     </CardContent>
                   </div>
                 </div>
@@ -212,14 +197,14 @@ function Services() {
 
 function About() {
   return (
-    <section id="about" className="section bg-[#362118] border-y border-[--line]">
-      <div className="container-edge grid gap-10 md:grid-cols-2 md:items-center">
-        <div className="text-[#fffcf2]">
+    <section id="about" className="py-28 bg-[#5A7ACD] border-y border-[--line]">
+      <div className="container-edge grid gap-32 md:grid-cols-2 md:items-center">
+        <div className="text-[#fffcf2] ">
           <p className="kicker">About</p>
           <h2 className="h2 mt-1">A simple, professional process</h2>
           <p className=" mt-3">
             We focus on doing the basics extremely well: prep the surface properly, protect floors and furniture, apply durable coatings,
-            and finish with a clean site. You get a job that looks sharp—and stays sharp.
+            and finish with a clean site. You get a job that looks sharp — and stays sharp.
           </p>
           <div className="mt-6 grid gap-3">
             {["1) Quick estimate", "2) Prep & protect", "3) Paint & finish", "4) Final walk-through"].map((t) => (
@@ -229,8 +214,8 @@ function About() {
             ))}
           </div>
         </div>
-        <div className="rounded-[--radius] border border-[--line] bg-white p-2 shadow-sm">
-          <img src="/about.jpg" alt="Painting work in progress" className="h-[320px] w-full rounded-[--radius] object-cover" />
+        <div className="rounded-[--radius] bg-white shadow-sm">
+          <img src="https://images.unsplash.com/photo-1604649418977-675d4b6320e6?q=80&w=1744&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="Painting work in progress" className="h-[320px] w-full rounded-[--radius] object-cover" />
         </div>
       </div>
     </section>
@@ -239,7 +224,7 @@ function About() {
 
 function Work() {
   return (
-    <section id="work" className="section bg-[#fff6e8]">
+    <section id="work" className="section bg-[#F5F2F2]">
       <div className="container-edge">
         <div className="max-w-2xl">
           <p className="kicker">Gallery</p>
@@ -264,7 +249,7 @@ function Work() {
 
 function Reviews() {
   return (
-    <section id="reviews" className="section bg-[#fff6e8]">
+    <section id="reviews" className="section bg-[#F5F2F2]">
       <div className="container-edge">
         <div className="max-w-2xl">
           <p className="kicker">Reviews</p>
@@ -307,7 +292,7 @@ function Quote() {
   };
 
   return (
-    <section id="quote" className="section border-t border-[--line] bg-[#362118]">
+    <section id="quote" className="section border-t border-[--line] bg-[#5A7ACD]">
       <div className="container-edge-freewidth w-[65%] grid gap-10 md:grid-cols-2">
         <div className="text-[#fffcf2] flex flex-col items-left justify-center">
           <p className="kicker">Get a free quote</p>
@@ -352,7 +337,7 @@ function Quote() {
 
 function Footer() {
   return (
-    <footer className="border-t border-[--line] bg-[#fffcf2]">
+    <footer className="border-t border-[--line] bg-[#F5F2F2]">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-[#63584b]">
         <div className="flex md:flex-row justify-between">
           <div>
@@ -364,7 +349,6 @@ function Footer() {
             <div className="font-bold text-[--ink]">Quick links</div>
             <div className="mt-2 grid gap-1">
               <a className="hover:text-[--ink]" href="#services">Services</a>
-              <a className="hover:text-[--ink]" href="#work">Gallery</a>
               <a className="hover:text-[--ink]" href="#reviews">Reviews</a>
               <a className="hover:text-[--ink]" href="#quote">Get a Quote</a>
             </div>
@@ -389,10 +373,9 @@ function Footer() {
 export default function App() {
   return (
     <div>
-      <TopBar />
       <Nav />
       <Hero />
-      <div className="h-16 bg-linear-to-r from-[#362118] to-[#a37313]">
+      <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]">
       </div>
       <Services />
       <About />

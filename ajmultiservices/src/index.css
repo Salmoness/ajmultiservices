@@ -1,6 +1,6 @@
 @layer theme, base, components, utilities;
 
-@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss";
 @theme {
   --brand: #1d4ed8;
   --brand-600: #2563eb;
@@ -23,8 +23,8 @@
 .p { @apply text-[15px] leading-7 text-slate-600; }
 
 .hero {
-  min-height: 100vh;
-  background-image: url("https://images.pexels.com/photos/48828/pexels-photo-48828.jpeg");
+  max-height: 101vh;
+  background-image: url("https://images.unsplash.com/photo-1613575831056-0acd5da8f085?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -41,6 +41,22 @@
 .hero-inner {
   position: relative;
   z-index: 1;
+}
+
+.services {
+  max-height: 101vh;
+  background-image: url("https://images.unsplash.com/photo-1613575831056-0acd5da8f085?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  position: relative;
+}
+
+.services::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(155, 165, 189, 0.55);
 }
 
 .border {
