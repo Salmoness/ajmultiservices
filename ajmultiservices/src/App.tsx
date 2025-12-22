@@ -4,10 +4,11 @@ import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { useForm } from "react-hook-form";
+import { useForm, Watch } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projects, reviews, services } from "@/data/data";
+import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
 
 const QuoteSchema = z.object({
   name: z.string().min(2, "Your name is required"),
@@ -16,6 +17,13 @@ const QuoteSchema = z.object({
   message: z.string().min(10, "Tell us a bit about the project"),
 });
 type QuoteInput = z.infer<typeof QuoteSchema>;
+
+const ReviewSchema = z.object({
+  name: z.string().min(2, "Name is required"),
+  rating: z.number().min(1).max(5),
+  text: z.string().min(4, "Please write a short review"),
+});
+type ReviewInput = z.infer<typeof ReviewSchema>;
 
 function Nav() {
   const [open, setOpen] = useState(false);
@@ -370,19 +378,147 @@ function Footer() {
   );
 }
 
+function LeaveReview() {
+  const { token } = useParams();
+
+  const {register, handleSubmit, setValue, watch, formState: { errors, isSubmitting }, } = useForm<ReviewInput>({
+    resolver: zodResolver(ReviewSchema),
+  });
+  
+  const reviewText = watch("text", "");
+
+  const [hoverRating, setHoverRating] = useState<number | null>(null);
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+
+  const onSubmit = async (data: ReviewInput) => {
+    console.log("Review token:", token);
+    console.log("Review data:", data);
+
+    await new Promise(r => setTimeout(r, 600));
+    setSubmitted(true);
+    alert("Thanks for your review!");
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-[#F5F2F2] px-4">
+      <div className="w-full max-w-lg bg-white p-6 shadow-md">
+        <h1 className="text-2xl font-extrabold text-[--ink]">
+          Leave a review
+        </h1>
+        <p className="mt-2 text-sm text-slate-600">
+          We appreciate your feedback.
+        </p>
+
+        <form className={`mt-6 grid gap-4 ${submitted ? "opacity-75" : ""}`} onSubmit={handleSubmit(onSubmit)}>
+          <div>
+            <label className="block text-sm font-semibold">Your name</label>
+            <Input {...register("name")} 
+              disabled={submitted}
+              className={submitted ? "bg-slate-100/60" : ""}
+            />
+            {errors?.name && <p className="text-sm text-red-600">{String(errors.name.message)}</p>}
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold">Rating</label>
+            <div className="mt-2 flex">
+              {[1, 2, 3, 4, 5].map((n) => {
+                const active =
+                  hoverRating !== null ? n <= hoverRating : n <= selectedRating;
+
+                return (
+                  <button
+                    key={n}
+                    type="button"
+                    disabled={submitted}
+                    className={`flex focus:outline-none w-10 items-center justify-center ${submitted ? "cursor-default pointer-events-none" : "cursor-pointer"}`}
+                    onMouseEnter={() => setHoverRating(n)}
+                    onMouseLeave={() => setHoverRating(null)}
+                    onClick={() => {
+                      setSelectedRating(n);
+                      setValue("rating", n, { shouldValidate: true });
+                    }}
+                    aria-label={`Rate ${n} stars`}
+                  >
+                    <Star
+                      className={`h-7 w-7 transition-all duration-150 ${active ? "text-amber-500 scale-110" : "text-slate-300"}`}
+                      fill={active ? "currentColor" : "none"}
+                    />
+                  </button>
+                );
+              })} 
+              {errors.rating && (
+                <p className="mt-1 text-sm text-red-600">
+                  {errors.rating.message}
+                </p>
+              )}
+            </div>
+          </div>
+
+          <div>
+            <label className="block text-sm font-semibold">Review</label>
+            <Textarea {...register("text")} 
+              disabled={submitted}
+              className={submitted ? "bg-slate-100/60" : ""}
+            />
+            <div className="flex justify-between text-xs mt-1">
+              <span className="text-slate-500">
+                {reviewText.length} characters
+              </span>
+            </div>
+            {errors?.text && <p className="text-sm text-red-600">{String(errors.text.message)}</p>}
+          </div>
+
+          {!submitted && (
+            <Button type="submit" variant="accent" disabled={isSubmitting || selectedRating === 0}>
+              Submit review
+            </Button>
+          )}
+        </form>
+        {submitted && (
+          <div className="flex flex-col items-center text-center py-10">
+            <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-full bg-emerald-100">
+              <Check className="h-7 w-7 text-emerald-600" />
+            </div>
+            <h2 className="text-2xl font-extrabold text-[--ink]">
+              Thank you for your review!
+            </h2>
+            <p className="mt-2 max-w-sm text-md text-slate-600">
+              Your review has been submitted successfully.
+            </p>
+            <p className="mt-4 text-md text-slate-400">
+              You may now close this page.
+            </p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
-    <div>
-      <Nav />
-      <Hero />
-      <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]">
-      </div>
-      <Services />
-      <About />
-      <Work />
-      <Reviews />
-      <Quote />
-      <Footer />
-    </div>
+    <BrowserRouter>
+          <Routes>
+            <Route
+              path="/"
+              element={
+                <div>
+                  <Nav />
+                  <Hero />
+                  <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]" />
+                  <Services />
+                  <About />
+                  <Work />
+                  <Reviews />
+                  <Quote />
+                  <Footer />
+                </div>
+              }
+            />
+            <Route path="/review/:token" element={<LeaveReview />} />
+          </Routes>
+        </BrowserRouter>
   );
 }
