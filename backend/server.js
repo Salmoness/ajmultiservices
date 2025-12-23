@@ -1,21 +1,44 @@
 import express from "express";
 import path from "path";
 import { fileURLToPath } from "url";
+import mongoose from "mongoose";
+import "dotenv/config";
+import reviewRoutes from "./routes/reviews.js";
+import cors from "cors";
 
 const app = express();
-const PORT = 5001;
+const PORT = 5000;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Serve static React build files
-app.use(express.static(path.join(__dirname, "../ajmultiservices/dist")));
+// Middleware to parse JSON bodies
+app.use(express.json());
+app.use(cors({
+  origin: "http://localhost:5173",
+  credentials: true,
+}));
 
-// React Router handles all other routes
-app.use((req, res) => {
-  res.sendFile(path.join(__dirname, "../ajmultiservices/dist/index.html"));
+app.use("/api/reviews", reviewRoutes);
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok" });
 });
 
-app.listen(PORT, () => {
-  console.log(`AJ Multiservices running on port ${PORT}`);
-});
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../ajmultiservices/dist")));
+  app.use((req, res) => {
+    res.sendFile(path.join(__dirname, "../ajmultiservices/dist/index.html"));
+  });
+}
+
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    console.log("MongoDB connected");
+    app.listen(PORT, () =>
+      console.log(`Server running on http://localhost:${PORT}`)
+    );
+  })
+  .catch((err) => {
+    console.error("Mongo connection error:", err);
+  });

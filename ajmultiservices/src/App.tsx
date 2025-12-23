@@ -35,14 +35,14 @@ function Nav() {
     { href: "#quote", label: "Get a Quote" },
   ];
   return (
-    <header className="sticky top-0 z-50 borderb h-32 bg-[#F5F2F2]/70 backdrop-blur">
-      <div className=" flex items-center justify-between px-8 h-full">
-        <a href="#" className="flex items-center gap-3">
-          <div className="flex items-center gap-3">
-            <img src="@/../public/logo.png" alt="" className="h-32 opacity-75"/>
+    <header className="sticky top-0 z-50 bg-[#F5F2F2]/70 backdrop-blur">
+      <div className=" flex items-center justify-between px-4 pr-6 md:px-8 md:py-0 md:h-32">
+        <a href="#" className="flex items-center min-w-0">
+          <div className="flex items-center gap-1">
+            <img src="/logo.png" alt="AJ logo" className="h-26 md:h-32 opacity-75 block"/>
             <div>
-              <div className="text-4xl font-extrabold leading-none text-[#2B2A2A]">AJ Multiservices</div>
-              <div className="text-md tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
+              <div className="text-4xl md:text-[40px] font-extrabold leading-none text-[#2B2A2A]">Multiservices</div>
+              <div className="text-md md:text-[18px] tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
             </div>
           </div>
         </a>
@@ -56,8 +56,8 @@ function Nav() {
           <Button variant="accent" asChild className="hidden md:flex md:min-w-2xs md:min-h-14"><a href="#quote">Get a free quote</a></Button>
         </div>
         
-        <button className="md:hidden rounded-[--radius] border border-[--line] p-2" onClick={() => setOpen(v => !v)} aria-label="Menu">
-          {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+        <button className="md:hidden rounded p-2 hover:cursor-pointer" onClick={() => setOpen(v => !v)} aria-label="Menu">
+          {open ? <X className="h-12 w-12" /> : <Menu className="h-12 w-12" />}
         </button>
       </div>
 
@@ -76,69 +76,70 @@ function Nav() {
 function Hero() {
   return (
     
-    <section className="hero relative min-h-screen -mt-32 pt-20">
-      <div className="hero-inner flex min-h-screen items-center justify-center -translate-y-24 py-20">
-        <div className="grid w-full max-w-7xl gap-64 md:grid-cols-2 md:items-center">
-          {/* Left: centered-ish text (like screenshot) */}
-          <div className="text-center md:text-left md:max-w-lg">
-            <p className="text-xs font-semibold uppercase tracking-widest text-white/80">
-              Professional painters
-            </p>
-
-            <h1 className="mt-3 text-balance text-5xl font-extrabold leading-[1.05] text-white sm:text-5xl md:text-5xl">
-              Quality painting for <br className="hidden sm:block" />
-              homes & businesses
-            </h1>
-
-            <p className="mx-auto mt-10 max-w-xl text-[15px] leading-7 text-white/80 md:mx-0">
-              A “done-right” crew for interior and exterior projects. We prep carefully,
-              protect your space, and finish clean — so the result looks great and lasts.
-            </p>
-
-
-            {/* Checklist */}
-            <div className="mt-14 grid gap-3 text-left sm:grid-cols-2">
-              {[
-                "Neat & respectful crew",
-                "Surface prep + repairs",
-                "High-quality materials",
-                "Satisfaction walk-through",
-              ].map((t) => (
-                <div key={t} className="flex items-start gap-2 text-sm text-white/85">
-                  <span className="mt-[5px] inline-block h-2 w-2 rounded-full bg-[#ffffff]" />
-                  <span>{t}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: “Need pricing fast?” card */}
-          <div className="m-auto w-full h-full bg-white/15 p-6 text-white/80 backdrop-blur-sm items-center">
-            <p className="text-md font-bold">Need pricing fast?</p>
-            <p className="mt-1 text-sm text-white/75">
-              Call or send a request—same-day response.
-            </p>
-
-            <div className="mt-5 grid gap-3">
-              <a
-                href="tel:+14075550123"
-                className=" bg-[#eeec7e] px-4 py-3 text-center text-sm font-semibold text-slate-900 hover:opacity-85"
-              >
-                Call (407) 555-0123
-              </a>
-              <a
-                href="mailto:quotes@ajmultiservices.com"
-                className=" border border-white/25 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Email quotes@ajmultiservices.com
-              </a>
-            </div>
-
-            <div className="mt-16 border border-white/20 bg-white/5 p-4">
-              <p className="text-sm font-bold">Service area</p>
-              <p className="mt-2 text-sm text-white/75">
-                Orlando • Winter Park • Kissimmee • Lake Nona • Altamonte Springs
+    <section className="hero">
+      <div className="hero-inner -mt-[104px] md:-mt-32 flex md:min-h-screen  items-center justify-center px-4 py-50">
+        <div className=" flex justify-center items-center w-full max-w-6xl">
+          <div className="gap-12 md:gap-20 flex flex-col md:flex-row m-auto w-full h-full bg-white/15 p-8 md:p-16 py-20 text-white/80 backdrop-blur-sm justify-between">
+            {/* Left: centered-ish text */}
+            <div className="text-center md:text-left md:max-w-lg ">
+              <p className="text-xs font-semibold uppercase tracking-widest text-white/80">
+                Professional painters
               </p>
+
+              <h1 className="mt-4 text-balance text-4xl font-extrabold text-white sm:text-5xl md:text-5xl">
+                Quality painting for <br className="hidden sm:block" />
+                homes & businesses
+              </h1>
+
+              <p className="hidden md:block mx-auto mt-8 max-w-xl text-[15px] leading-7 text-white/80 md:mx-0">
+                A “done-right” crew for interior and exterior projects. We prep carefully,
+                protect your space, and finish clean — so the result looks great and lasts.
+              </p>
+
+
+              {/* Checklist */}
+              <div className="hidden md:grid mt-8 gap-3 grid-cols-2">
+                {[
+                  "Neat & respectful crew",
+                  "Surface prep + repairs",
+                  "High-quality materials",
+                  "Satisfaction walk-through",
+                ].map((t) => (
+                  <div key={t} className="flex items-start gap-2 text-sm text-white/85">
+                    <span className="mt-[5px] inline-block h-2 w-2 rounded-full bg-[#ffffff]" />
+                    <span>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Right: “Need pricing fast?” card */}
+            <div>
+              <p className="text-md font-bold">Need pricing fast?</p>
+              <p className="mt-1 text-sm text-white/75">
+                Call or send a request—same-day response.
+              </p>
+
+              <div className="mt-5 grid gap-3">
+                <a
+                  href="tel:+14075550123"
+                  className=" bg-[#eeec7e] px-4 py-3 text-center text-sm font-semibold text-slate-900 hover:opacity-85"
+                >
+                  Call (407) 555-0123
+                </a>
+                <a
+                  href="mailto:quotes@ajmultiservices.com"
+                  className=" border border-white/25 px-4 py-3 text-center text-sm font-semibold text-white hover:bg-white/10"
+                >
+                  Email quotes@ajmultiservices.com
+                </a>
+              </div>
+
+              <div className="mt-16 border border-white/20 bg-white/5 p-4">
+                <p className="text-sm font-bold">Service area</p>
+                <p className="mt-2 text-sm text-white/75">
+                  Orlando • Winter Park • Kissimmee • Lake Nona • Altamonte Springs
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -161,9 +162,9 @@ function Services() {
           {services.map((s) => {  
             const Icon = s.icon;
             return (
-              <Card key={s.title} className="mx-12 my-6 flex-1 flex-row md:max-w-md p-4 shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
-                <div className="flex flex-1 h-full">
-                  <CardHeader className="pb-8 px-6">   
+              <Card key={s.title} className="mx-4 my-4 flex flex-col gap-6 p-2 pl-8 pr-6 md:mx-12 md:my-6 md:flex-row md:max-w-md shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
+                <div className="flex flex-1 h-full justify-center">
+                  <CardHeader className="pb-8 px-0">   
                     <CardTitle>{s.title}</CardTitle>
                     <CardDescription >
                       <ul className="mt-3 grid space-y-3">
@@ -175,11 +176,11 @@ function Services() {
                       </ul>
                     </CardDescription>
                   </CardHeader>
-                  <div className="flex flex-col justify-around items-center m-0 p-0">
+                  <div className="flex flex-col justify-around items-center m-0 p-0 pt-4">
                     <CardContent className="flex justify-center items-center m-0 p-0">
                       <Icon className=" h-32 w-32 text-[--brand]" />
                     </CardContent>
-                    <CardContent className="pb-0">
+                    <CardContent className="pb-0 pl-4 pr-4">
                       <Button variant="link" className="bg-[#F5F2F2]" asChild><a href="#quote">Request pricing</a></Button>
                     </CardContent>
                   </div>
@@ -195,7 +196,7 @@ function Services() {
               <div className="text-lg font-extrabold text-[--ink]">Ready to start?</div>
               <div className="text-sm text-slate-600">Send details and we'll follow up with next steps.</div>
             </div>
-            <Button variant="accent" asChild className="ml-16"><a href="#quote">Get a free quote</a></Button>
+            <Button variant="accent" asChild className="md:ml-16"><a href="#quote">Get a free quote</a></Button>
           </div>
         </div>
       </div>
@@ -232,19 +233,19 @@ function About() {
 
 function Work() {
   return (
-    <section id="work" className="section bg-[#F5F2F2]">
-      <div className="container-edge">
+    <section id="work" className="section bg-[#5A7ACD]">
+      <div className="container-edge text-[#fffcf2]">
         <div className="max-w-2xl">
           <p className="kicker">Gallery</p>
           <h2 className="h2 mt-1">Recent work</h2>
-          <p className="p mt-3">Swap these placeholders with your real before/after photos.</p>
+          <p className=" mt-3">Gotta swap these for the real before/after</p>
         </div>
 
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {projects.map((p) => (
             <a key={p.id} href="#quote" className="group block">
               <div className="overflow-hidden rounded-[--radius] border border-[--line] bg-white shadow-sm">
-                <img src={p.image} alt={p.title} className="h-40 w-full object-cover transition-transform group-hover:scale-[1.03]" />
+                <img src={p.image} alt={p.title} className="md:h-80 h-40 w-full object-cover transition-transform group-hover:scale-[1.10]" />
                 <div className="p-3 text-sm font-semibold text-slate-800">{p.title}</div>
               </div>
             </a>
@@ -301,7 +302,7 @@ function Quote() {
 
   return (
     <section id="quote" className="section border-t border-[--line] bg-[#5A7ACD]">
-      <div className="container-edge-freewidth w-[65%] grid gap-10 md:grid-cols-2">
+      <div className="container-edge-freewidth w-[95%] md:w-[65%] grid gap-10 md:grid-cols-2">
         <div className="text-[#fffcf2] flex flex-col items-left justify-center">
           <p className="kicker">Get a free quote</p>
           <h2 className="text-5xl font-extrabold spacing mt-1">Tell us about your project</h2>
@@ -392,12 +393,21 @@ function LeaveReview() {
   const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = async (data: ReviewInput) => {
-    console.log("Review token:", token);
-    console.log("Review data:", data);
+    console.log("Review submitted:", data, token);
+    const res = await fetch(`/api/reviews/${token}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+    });
+    const response = await res.json();
 
-    await new Promise(r => setTimeout(r, 600));
+    if (!res.ok) {
+      //const err = await res.json();
+      alert(response.error || "Submission failed");
+      return;
+    }
+
     setSubmitted(true);
-    alert("Thanks for your review!");
   };
 
   return (
@@ -497,6 +507,106 @@ function LeaveReview() {
   );
 }
 
+function Admin() {
+  const [loading, setLoading] = useState(false);
+  const [reviewUrl, setReviewUrl] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  
+
+  const generateLink = async () => {
+    setLoading(true);
+    setError(null);
+    setReviewUrl(null);
+
+    try {
+      const res = await fetch("/api/reviews/create-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          maxUses: 1,
+          expiresInDays: 14,
+        }),
+      });
+
+      if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.error || "Failed to generate link");
+      }
+
+      const data = await res.json();
+      setReviewUrl(data.reviewUrl);
+    } catch (err: any) {
+      setError(err.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const onCopy = () => {
+    navigator.clipboard.writeText(reviewUrl);
+    setCopied(true);
+  }
+
+  return (
+    <div className="min-h-screen bg-[#F5F2F2] flex items-center justify-center px-4">
+      <div className="w-full max-w-2xl bg-white p-6 shadow-md flex flex-col items-center">
+        <div className="w-full ">
+          <h1 className="text-2xl font-extrabold text-[--ink]">
+            Admin
+          </h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Generate review links for clients.
+          </p>
+        </div>
+        <Button
+          className="mt-6 w-full"
+          variant="accent"
+          onClick={generateLink}
+          disabled={loading}
+        >
+          {loading ? "Generating..." : "Generate Link"}
+        </Button>
+
+        {error && (
+          <p className="mt-4 text-sm text-red-600">
+            {error}
+          </p>
+        )}
+
+        {reviewUrl && (
+          <div className="w-full mt-6 rounded border border-slate-200 bg-slate-50 p-4">
+            <p className="text-sm font-semibold text-slate-700">
+              Review link
+            </p>
+
+            <div className="mt-2 flex items-center gap-2">
+              <input
+                readOnly
+                value={reviewUrl}
+                className="w-full rounded border border-slate-300 px-2 py-1 text-sm"
+              />
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onCopy}
+              >
+                Copy
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {copied && (
+          <p className="mt-4 text-sm font-bold justify-end flex text-green-600">
+            Link copied to clipboard.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function App() {
   return (
     <BrowserRouter>
@@ -509,7 +619,6 @@ export default function App() {
                   <Hero />
                   <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]" />
                   <Services />
-                  <About />
                   <Work />
                   <Reviews />
                   <Quote />
@@ -518,6 +627,7 @@ export default function App() {
               }
             />
             <Route path="/review/:token" element={<LeaveReview />} />
+            <Route path="/admin" element={<Admin />} />
           </Routes>
         </BrowserRouter>
   );
