@@ -20,6 +20,7 @@ const allowedOrigins = [
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+
 app.use(cors({
   origin: allowedOrigins,
   credentials: true,
@@ -32,7 +33,7 @@ app.get("/api/health", (_req, res) => {
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../ajmultiservices/dist")));
-  app.use((req, res) => {
+  app.get("*",(req, res) => {
     res.sendFile(path.join(__dirname, "../ajmultiservices/dist/index.html"));
   });
 }
