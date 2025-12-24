@@ -7,7 +7,7 @@ import reviewRoutes from "./routes/reviews.js";
 import cors from "cors";
 
 const app = express();
-const PORT = 5000;
+const PORT = 5001;
 
 app.use("/api/reviews", reviewRoutes);
 app.get("/api/health", (_req, res) => {
