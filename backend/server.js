@@ -12,10 +12,16 @@ const PORT = 5000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+const allowedOrigins = [
+  "https://ajmultiservicesllc.com",
+  "https://www.ajmultiservicesllc.com",
+  "http://localhost:5173"
+];
+
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors({
-  origin: "https://ajmultiservicesllc.com/",
+  origin: allowedOrigins,
   credentials: true,
 }));
 
