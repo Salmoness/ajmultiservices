@@ -32,37 +32,36 @@ function Nav() {
     { href: "#about", label: "About" },
     { href: "#work", label: "Gallery" },
     { href: "#reviews", label: "Reviews" },
-    { href: "#quote", label: "Get a Quote" },
   ];
   return (
-    <header className="sticky top-0 z-50 bg-[#F5F2F2]/70 backdrop-blur">
-      <div className=" flex items-center justify-between px-4 pr-6 md:px-8 md:py-0 md:h-32">
+    <header className="w-full sticky top-0 z-50 bg-[#F5F2F2]/70 backdrop-blur">
+      <div className="w-full flex items-center justify-between px-2 pr-6 lg:px-8 lg:py-0 lg:h-32">
         <a href="#" className="flex items-center min-w-0">
           <div className="flex items-center gap-1">
-            <img src="/logo.png" alt="AJ logo" className="h-26 md:h-32 opacity-75 block"/>
+            <img src="/logo.png" alt="AJ logo" className="h-22 lg:h-32 opacity-75 block"/>
             <div>
-              <div className="text-4xl md:text-[40px] font-extrabold leading-none text-[#2B2A2A]">Multiservices</div>
-              <div className="text-md md:text-[18px] tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
+              <div className="text-[32px] lg:text-[40px] font-extrabold leading-none text-[#2B2A2A]">Multiservices</div>
+              <div className="text-sm lg:text-[18px] tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
             </div>
           </div>
         </a>
 
-        <nav className="hidden items-center gap-4 h-full md:flex">
+        <nav className="hidden items-center gap-4 h-full lg:flex ">
           {links.map(l => <a key={l.href} className="h-32 w-[98px] flex justify-center items-center text-md font-semibold text-[#2B2A2A] bg-transparent transition-all duration-300 ease-in-out hover:bg-[#2B2A2A]/7 hover:text-[#000000]" href={l.href}>{l.label}</a>)}
         </nav>
 
 
         <div className="w-[450px] flex justify-center">
-          <Button variant="accent" asChild className="hidden md:flex md:min-w-2xs md:min-h-14"><a href="#quote">Get a free quote</a></Button>
+          <Button variant="accent" asChild className="hidden lg:flex lg:min-w-2xs lg:min-h-14"><a href="#quote">Get a free quote</a></Button>
         </div>
         
-        <button className="md:hidden rounded p-2 hover:cursor-pointer" onClick={() => setOpen(v => !v)} aria-label="Menu">
-          {open ? <X className="h-12 w-12" /> : <Menu className="h-12 w-12" />}
+        <button className="lg:hidden rounded hover:cursor-pointer" onClick={() => setOpen(v => !v)} aria-label="Menu">
+          {open ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
         </button>
       </div>
 
       {open && (
-        <div className="md:hidden border-t border-[--line] bg-white">
+        <div className="lg:hidden border-t border-[--line] bg-white">
           <div className="container-edge grid gap-3 py-4">
             {links.map(l => <a key={l.href} className="text-sm font-semibold text-slate-700" href={l.href} onClick={() => setOpen(false)}>{l.label}</a>)}
             <Button variant="accent" asChild><a href="#quote" onClick={() => setOpen(false)}>Get a free quote</a></Button>
@@ -77,28 +76,28 @@ function Hero() {
   return (
     
     <section className="hero">
-      <div className="hero-inner -mt-[104px] md:-mt-32 flex md:min-h-screen  items-center justify-center px-4 py-50">
+      <div className="hero-inner -mt-[104px] lg:-mt-32 flex lg:min-h-screen items-center justify-center px-4 py-50">
         <div className=" flex justify-center items-center w-full max-w-6xl">
-          <div className="gap-12 md:gap-20 flex flex-col md:flex-row m-auto w-full h-full bg-white/15 p-8 md:p-16 py-20 text-white/80 backdrop-blur-sm justify-between">
+          <div className="gap-12 lg:gap-20 flex flex-col lg:flex-row m-auto w-full h-full bg-white/15 p-8 lg:p-16 py-20 text-white/80 backdrop-blur-sm justify-between">
             {/* Left: centered-ish text */}
-            <div className="text-center md:text-left md:max-w-lg ">
+            <div className="text-center lg:text-left lg:max-w-lg ">
               <p className="text-xs font-semibold uppercase tracking-widest text-white/80">
                 Professional painters
               </p>
 
-              <h1 className="mt-4 text-balance text-4xl font-extrabold text-white sm:text-5xl md:text-5xl">
+              <h1 className="mt-4 text-balance text-[34px] font-extrabold text-white sm:text-5xl lg:text-5xl">
                 Quality painting for <br className="hidden sm:block" />
                 homes & businesses
               </h1>
 
-              <p className="hidden md:block mx-auto mt-8 max-w-xl text-[15px] leading-7 text-white/80 md:mx-0">
+              <p className="hidden lg:block mx-auto mt-8 max-w-xl text-[15px] leading-7 text-white/80 lg:mx-0">
                 A “done-right” crew for interior and exterior projects. We prep carefully,
                 protect your space, and finish clean — so the result looks great and lasts.
               </p>
 
 
               {/* Checklist */}
-              <div className="hidden md:grid mt-8 gap-3 grid-cols-2">
+              <div className="hidden lg:grid mt-8 gap-3 grid-cols-2">
                 {[
                   "Neat & respectful crew",
                   "Surface prep + repairs",
@@ -158,11 +157,11 @@ function Services() {
           <p className="p mt-3">From single rooms to full exteriors—our process is built around prep, protection, and clean finishing.</p>
         </div>
 
-        <div className="mt-10 flex flex-col md:flex-row w-full md:justify-center">
+        <div className="mt-10 flex flex-col lg:flex-row w-full lg:justify-center">
           {services.map((s) => {  
             const Icon = s.icon;
             return (
-              <Card key={s.title} className="mx-4 my-4 flex flex-col gap-6 p-2 pl-8 pr-6 md:mx-12 md:my-6 md:flex-row md:max-w-md shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
+              <Card key={s.title} className="mx-4 my-4 flex flex-col gap-6 p-2 pl-8 pr-6 lg:mx-12 lg:my-6 lg:flex-row lg:max-w-md shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
                 <div className="flex flex-1 h-full justify-center">
                   <CardHeader className="pb-8 px-0">   
                     <CardTitle>{s.title}</CardTitle>
@@ -191,12 +190,12 @@ function Services() {
         </div>
 
         <div className="mt-10 ">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
             <div className="">
               <div className="text-lg font-extrabold text-[--ink]">Ready to start?</div>
               <div className="text-sm text-slate-600">Send details and we'll follow up with next steps.</div>
             </div>
-            <Button variant="accent" asChild className="md:ml-16"><a href="#quote">Get a free quote</a></Button>
+            <Button variant="accent" asChild className="lg:ml-16"><a href="#quote">Get a free quote</a></Button>
           </div>
         </div>
       </div>
@@ -207,7 +206,7 @@ function Services() {
 function About() {
   return (
     <section id="about" className="py-28 bg-[#5A7ACD] border-y border-[--line]">
-      <div className="container-edge grid gap-32 md:grid-cols-2 md:items-center">
+      <div className="container-edge grid gap-32 lg:grid-cols-2 lg:items-center">
         <div className="text-[#fffcf2] ">
           <p className="kicker">About</p>
           <h2 className="h2 mt-1">A simple, professional process</h2>
@@ -245,7 +244,7 @@ function Work() {
           {projects.map((p) => (
             <a key={p.id} href="#quote" className="group block">
               <div className="overflow-hidden rounded-[--radius] border border-[--line] bg-white shadow-sm">
-                <img src={p.image} alt={p.title} className="md:h-80 h-40 w-full object-cover transition-transform group-hover:scale-[1.10]" />
+                <img src={p.image} alt={p.title} className="lg:h-80 h-40 w-full object-cover transition-transform group-hover:scale-[1.10]" />
                 <div className="p-3 text-sm font-semibold text-slate-800">{p.title}</div>
               </div>
             </a>
@@ -266,7 +265,7 @@ function Reviews() {
           <p className="p mt-3">A few highlights—add more as you collect them.</p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <div className="mt-10 grid gap-6 lg:grid-cols-3">
           {reviews.map((r) => (
             <Card key={r.id}>
               <CardHeader>
@@ -302,7 +301,7 @@ function Quote() {
 
   return (
     <section id="quote" className="section border-t border-[--line] bg-[#5A7ACD]">
-      <div className="container-edge-freewidth w-[95%] md:w-[65%] grid gap-10 md:grid-cols-2">
+      <div className="container-edge-freewidth w-[95%] lg:w-[65%] grid gap-10 lg:grid-cols-2">
         <div className="text-[#fffcf2] flex flex-col items-left justify-center">
           <p className="kicker">Get a free quote</p>
           <h2 className="text-5xl font-extrabold spacing mt-1">Tell us about your project</h2>
@@ -348,13 +347,13 @@ function Footer() {
   return (
     <footer className="border-t border-[--line] bg-[#F5F2F2]">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-10 text-sm text-[#63584b]">
-        <div className="flex md:flex-row justify-between">
+        <div className="flex lg:flex-row justify-between">
           <div>
             <div className="text-base font-extrabold text-[--ink]">AJ Multiservices</div>
             <p className="mt-2">Interior & Exterior Painting</p>
             <p className="mt-2">Central Florida</p>
           </div>
-          <div className="hidden md:inline">
+          <div className="hidden lg:inline">
             <div className="font-bold text-[--ink]">Quick links</div>
             <div className="mt-2 grid gap-1">
               <a className="hover:text-[--ink]" href="#services">Services</a>
@@ -614,7 +613,7 @@ export default function App() {
             <Route
               path="/"
               element={
-                <div>
+                <div className="w-full">
                   <Nav />
                   <Hero />
                   <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]" />
