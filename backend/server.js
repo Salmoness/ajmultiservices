@@ -15,7 +15,7 @@ const __dirname = path.dirname(__filename);
 // Middleware to parse JSON bodies
 app.use(express.json());
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://ajmultiservicesllc.com/",
   credentials: true,
 }));
 
@@ -36,7 +36,7 @@ mongoose
   .then(() => {
     console.log("MongoDB connected");
     app.listen(PORT, () =>
-      console.log(`Server running on http://localhost:${PORT}`)
+      console.log(`Server running on http://127.0.0.1:${PORT}`)
     );
   })
   .catch((err) => {
