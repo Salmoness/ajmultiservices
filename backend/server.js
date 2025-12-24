@@ -9,6 +9,11 @@ import cors from "cors";
 const app = express();
 const PORT = 5000;
 
+app.use("/api/reviews", reviewRoutes);
+app.get("/api/health", (_req, res) => {
+  res.json({ status: "ok" });
+});
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -26,12 +31,9 @@ app.use(cors({
   credentials: true,
 }));
 
-app.use("/api/reviews", reviewRoutes);
-app.get("/api/health", (_req, res) => {
-  res.json({ status: "ok" });
-});
 
 if (process.env.NODE_ENV === "production") {
+  console.log("production mode");
   app.use(express.static(path.join(__dirname, "../ajmultiservices/dist")));
   app.use((req, res) => {
     res.sendFile(path.join(__dirname, "../ajmultiservices/dist/index.html"));
