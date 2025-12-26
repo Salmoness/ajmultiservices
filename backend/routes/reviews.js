@@ -66,7 +66,7 @@ router.post("/:token", async (req, res) => {
     
   } catch (error) {
     console.error(error);
-    res.status(500).json({ success: false });
+    return res.status(500).json({ error: error.message || "Server error" });
   }
 });
 

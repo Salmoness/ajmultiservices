@@ -50,7 +50,6 @@ function Nav() {
           {links.map(l => <a key={l.href} className="h-32 w-[98px] flex justify-center items-center text-md font-semibold text-[#2B2A2A] bg-transparent transition-all duration-300 ease-in-out hover:bg-[#2B2A2A]/7 hover:text-[#000000]" href={l.href}>{l.label}</a>)}
         </nav>
 
-
         <div className="w-[450px] flex justify-center">
           <Button variant="accent" asChild className="hidden lg:flex lg:min-w-2xs lg:min-h-14"><a href="#quote">Get a free quote</a></Button>
         </div>
