@@ -32,6 +32,15 @@ router.post("/create-link", async (req, res) => {
       active: true,
     });
 
+    if (process.env.NODE_ENV === "production") {
+      return res.json({
+      token: link.token,
+      reviewUrl: `https://ajmultiservicesllc.com/review/${link.token}`,
+      maxUses: link.maxUses,
+      expiresAt: link.expiresAt,
+    })};
+
+    //else
     return res.json({
       token: link.token,
       reviewUrl: `http://localhost:5173/review/${link.token}`,

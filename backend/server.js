@@ -9,6 +9,8 @@ import cors from "cors";
 const app = express();
 const PORT = 5001;
 
+app.use(express.json());
+
 app.use("/api/reviews", reviewRoutes);
 app.get("/api/health", (_req, res) => {
   res.json({ status: "ok" });
@@ -23,8 +25,6 @@ const allowedOrigins = [
   "http://localhost:5173"
 ];
 
-// Middleware to parse JSON bodies
-app.use(express.json());
 
 app.use(cors({
   origin: true,
