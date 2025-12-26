@@ -518,6 +518,7 @@ function Admin() {
     setReviewUrl(null);
 
     try {
+      console.log("reaches");
       const res = await fetch("/api/reviews/create-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -526,7 +527,7 @@ function Admin() {
           expiresInDays: 14,
         }),
       });
-
+      console.log("reaches");
       if (!res.ok) {
         const err = await res.json();
         throw new Error(err.error || "Failed to generate link");
