@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { Phone, Mail, MapPin, Star, Menu, X, Check } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
+import { Phone, Mail, MapPin, Star, Menu, X, Check, FileText, Home, Layers, ShieldCheck, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/Card";
 import { Input } from "@/components/ui/Input";
@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { projects, reviews, services } from "@/data/data";
 import { BrowserRouter, Routes, Route, useParams } from "react-router-dom";
+import { motion, useMotionValue, useAnimationFrame } from "framer-motion";
 
 const QuoteSchema = z.object({
   name: z.string().min(2, "Your name is required"),
@@ -38,7 +39,7 @@ function Nav() {
       <div className="w-full flex items-center justify-between px-2 pr-6 lg:px-8 lg:py-0 lg:h-32">
         <a href="#" className="flex items-center min-w-0">
           <div className="flex items-center gap-1">
-            <img src="/logo.png" alt="AJ logo" className="h-22 lg:h-32 opacity-75 block"/>
+            <img src="/logo.png" alt="AJ logo" className="h-22 lg:h-32 opacity-75 block" />
             <div>
               <div className="text-[32px] lg:text-[40px] font-extrabold leading-none text-[#2B2A2A]">Multiservices</div>
               <div className="text-sm lg:text-[18px] tracking-widest text-[#2B2A2A] text-center">Interior & Exterior Painting</div>
@@ -53,7 +54,7 @@ function Nav() {
         <div className="w-[450px] flex justify-center">
           <Button variant="accent" asChild className="hidden lg:flex lg:min-w-2xs lg:min-h-14"><a href="#quote">Get a free quote</a></Button>
         </div>
-        
+
         <button className="lg:hidden rounded hover:cursor-pointer" onClick={() => setOpen(v => !v)} aria-label="Menu">
           {open ? <X className="h-10 w-10" /> : <Menu className="h-10 w-10" />}
         </button>
@@ -73,7 +74,7 @@ function Nav() {
 
 function Hero() {
   return (
-    
+
     <section className="hero">
       <div className="hero-inner -mt-[104px] lg:-mt-32 flex lg:min-h-screen items-center justify-center px-4 py-50">
         <div className=" flex justify-center items-center w-full max-w-6xl">
@@ -146,55 +147,163 @@ function Hero() {
   );
 }
 
+const trustItems = [
+  {
+    icon: FileText,
+    label: "Free Estimates",
+    description: "No obligations. Get a clear, detailed quote before we start.",
+  },
+  {
+    icon: Home,
+    label: "Residential Painting",
+    description: "Professional care for every room in your home, inside and out.",
+  },
+  {
+    icon: Layers,
+    label: "Interior & Exterior",
+    description: "Complete painting solutions — walls, trim, ceilings, and facades.",
+  },
+  {
+    icon: ShieldCheck,
+    label: "Reliable Local Service",
+    description: "Orlando-based professionals you can trust.",
+  },
+];
+
+function TrustBar() {
+  // 4 repeats ensures the track is always wider than any viewport
+  const REPEATS = 4;
+  const band = Array.from({ length: REPEATS }, () => trustItems).flat();
+
+  const x = useMotionValue(0);
+  const speed = useRef(40);
+  const hovered = useRef(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const singleSetWidth = useRef(0);
+
+  // Measure after mount (guaranteed scrollWidth) and on resize
+  useEffect(() => {
+    const measure = () => {
+      if (trackRef.current) {
+        singleSetWidth.current = trackRef.current.scrollWidth / REPEATS;
+      }
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  useAnimationFrame((_, delta) => {
+    const BASE_SPEED = window.innerWidth >= 1024 ? 55 : 40;
+    const target = hovered.current ? 0 : BASE_SPEED;
+    speed.current += (target - speed.current) * 0.04;
+
+    const wrap = singleSetWidth.current;
+    if (!wrap) return; // wait until measured
+    const next = x.get() - speed.current * (delta / 1000);
+    x.set(next <= -wrap ? next + wrap : next);
+  });
+
+  return (
+    <section
+      className="bg-slate-900 py-10"
+      style={{ overflow: "hidden" }}
+      onMouseEnter={() => { hovered.current = true; }}
+      onMouseLeave={() => { hovered.current = false; }}
+    >
+      <motion.div ref={trackRef} style={{ x, display: "flex", width: "max-content" }}>
+        {band.map(({ icon: Icon, label, description }, i) => (
+          <div
+            key={`${label}-${i}`}
+            className="group flex flex-col items-center text-center gap-3 shrink-0 w-[260px] lg:w-[25vw] p-8 border-r border-white/20 transition-all duration-300 cursor-default bg-slate-900 hover:bg-white/4 hover:shadow-lg hover:-translate-y-1 box-border"
+          >
+            <div className="flex items-center justify-center h-20 w-20 rounded-full bg-white/11 transition-all duration-300 group-hover:bg-white/20 group-hover:scale-110 group-hover:ring-4 group-hover:ring-white/10">
+              <Icon className="h-12 w-12 text-blue-300 transition-colors duration-300 group-hover:text-white" strokeWidth={1.75} />
+            </div>
+            <p className="text-[15px] font-bold text-white tracking-tight whitespace-nowrap transition-colors duration-300 group-hover:text-blue-300">
+              {label}
+            </p>
+            <p className="text-[13px] leading-relaxed text-slate-400 max-w-[80%] opacity-85">
+              {description}
+            </p>
+          </div>
+        ))}
+      </motion.div>
+    </section>
+  );
+}
+
 function Services() {
   return (
-    <section id="services" className="section bg-[#F5F2F2] backdrop-blur-sm">
+    <section id="services" className="relative overflow-hidden bg-[radial-gradient(circle_at_top,#ffffff_0%,#F5F2F2_48%,#d7e3f7_100%)] py-16 lg:py-24">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.18] [background-image:radial-gradient(#5A7ACD_1px,transparent_1px)] [background-size:24px_24px]" />
       <div className="container-edge-freewidth relative z-1 flex flex-col items-center px-4">
-        <div className="max-w-3xl">
+        <div className="max-w-3xl text-center lg:text-left">
           <p className="kicker">Services</p>
-          <h2 className="h2 mt-1">Painting services we offer</h2>
-          <p className="p mt-3">From single rooms to full exteriors—our process is built around prep, protection, and clean finishing.</p>
+          <h2 className="h2 mt-1 text-2xl sm:text-3xl">Painting services we offer</h2>
+          <p className="p mt-4">From single rooms to full exteriors—our process is built around prep, protection, and clean finishing.</p>
+
         </div>
 
-        <div className="mt-10 flex flex-col lg:flex-row w-full lg:justify-center">
-          {services.map((s) => {  
+        <div className="mt-12 flex w-full flex-col gap-6 sm:mt-14 sm:gap-7 lg:mt-16 lg:flex-row lg:justify-center lg:gap-12">
+          {services.map((s, index) => {
             const Icon = s.icon;
             return (
-              <Card key={s.title} className="mx-4 my-4 flex flex-col gap-6 p-2 pl-8 pr-6 lg:mx-12 lg:my-6 lg:flex-row lg:max-w-md shadow-md backdrop-blur-sm bg-[#dcdddf] border-none">
-                <div className="flex flex-1 h-full justify-center">
-                  <CardHeader className="pb-8 px-0">   
-                    <CardTitle>{s.title}</CardTitle>
-                    <CardDescription >
-                      <ul className="mt-3 grid space-y-3">
-                        {s.bullets.map((b) => (
-                          <li key={b} className="flex items-start gap-2 text-[15px] leading-6 text-slate-600">
-                            <Check className="mt-0.5 h-4 w-4 shrink-0" /> {b}
-                          </li>
-                        ))}
-                      </ul>
-                    </CardDescription>
-                  </CardHeader>
-                  <div className="flex flex-col justify-around items-center m-0 p-0 pt-4">
-                    <CardContent className="flex justify-center items-center m-0 p-0">
-                      <Icon className=" h-32 w-32 text-[--brand]" />
-                    </CardContent>
-                    <CardContent className="pb-0 pl-4 pr-4">
-                      <Button variant="link" className="bg-[#F5F2F2]" asChild><a href="#quote">Request pricing</a></Button>
-                    </CardContent>
+              <motion.div
+                key={s.title}
+                className="w-full lg:max-w-md"
+                initial={{ opacity: 0, y: 28 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.3 }}
+                transition={{ duration: 0.5, delay: index * 0.12, ease: "easeOut" }}
+              >
+                <Card className="group mx-auto my-0 flex items-center justify-center h-full w-full border border-white/70 bg-linear-to-br from-white/95 to-slate-100/85 p-5 shadow-lg shadow-slate-900/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-[#5A7ACD]/30 hover:shadow-xl hover:shadow-slate-900/12 sm:p-7 lg:mx-0 lg:max-w-120 lg:p-8">
+                  <div className="flex flex-row items-center gap-6 sm:gap-8 lg:flex lg:flex-row lg:items-center lg:gap-10">
+                    <div className="flex shrink-0 items-center justify-center lg:order-2 lg:min-w-36">
+                      <CardContent className="m-0 flex min-h-28 min-w-28 items-center justify-center p-0 sm:min-h-32 sm:min-w-32">
+                        <div className="rounded-full flex items-center justify-center bg-[#5A7ACD]/10 p-5 ring-1 ring-[#5A7ACD]/15 transition-all duration-300 group-hover:scale-110 group-hover:bg-[#5A7ACD]/20 group-hover:ring-4 group-hover:ring-[#5A7ACD]/10 sm:p-6 lg:p-6">
+                          <Icon className="h-12 w-12 text-[#5A7ACD] transition-colors duration-300  lg:h-24 lg:w-24" />
+                        </div>
+                      </CardContent>
+                    </div>
+                    <CardHeader className="min-w-0 flex-1 px-0 py-1 lg:py-0 lg:text-left">
+                      <CardTitle className="text-lg leading-snug lg:text-[22px]">{s.title}</CardTitle>
+                      <CardDescription>
+                        <ul className="mt-4 grid gap-2.5 lg:gap-4">
+                          {s.bullets.map((b) => (
+                            <li key={b} className="flex items-start gap-2.5 text-sm leading-6 text-slate-600 lg:gap-3">
+                              <Check className="mt-1 h-4 w-4 shrink-0 text-[#5A7ACD]" /> {b}
+                            </li>
+                          ))}
+                        </ul>
+                      </CardDescription>
+                    </CardHeader>
                   </div>
-                </div>
-              </Card>
+                </Card>
+              </motion.div>
             );
           })}
         </div>
 
-        <div className="mt-10 ">
-          <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
-            <div className="">
-              <div className="text-lg font-extrabold text-[--ink]">Ready to start?</div>
-              <div className="text-sm text-slate-600">Send details and we'll follow up with next steps.</div>
+        <div className="mt-12 w-full max-w-6xl sm:mt-14 lg:mt-18">
+          <div className="relative overflow-hidden bg-linear-to-br from-[#1f3158] via-[#304875] to-[#5A7ACD] px-6 py-10 text-white shadow-[0_26px_80px_rgba(31,49,88,0.26)] sm:px-9 sm:py-12 lg:px-12 lg:py-14">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_85%_15%,rgba(255,255,255,0.18),transparent_32%)]" />
+            <div className="relative flex flex-col gap-7 lg:flex-row lg:items-center lg:justify-between lg:gap-10">
+              <div className="max-w-2xl">
+                <h3 className="mt-3 text-3xl font-extrabold leading-tight sm:text-4xl">Ready to transform your space?</h3>
+                <p className="mt-4 max-w-xl text-base leading-7 text-white/78">Send us a few details and we'll follow up with clear next steps.</p>
+              </div>
+              <Button
+                variant="outline"
+                asChild
+                className="group h-[52px] w-full  border border-white/55 bg-white/95 px-7 text-[15px] font-bold text-[#26385f] shadow-[0_16px_34px_rgba(15,23,42,0.18)] transition-[transform,box-shadow,background-color,border-color,color] duration-300 ease-out hover:-translate-y-0.5 hover:border-[#eeec7e] hover:bg-[#eeec7e] hover:text-[#1e2a4b] hover:shadow-[0_20px_42px_rgba(15,23,42,0.24)] active:translate-y-0 sm:w-auto sm:min-w-56"
+              >
+                <a href="#quote" className="inline-flex items-center justify-center gap-2">
+                  Get a free quote
+                  <ArrowRight className="h-4 w-4 transition-transform duration-300 ease-out group-hover:translate-x-0.5" />
+                </a>
+              </Button>
             </div>
-            <Button variant="accent" asChild className="lg:ml-16"><a href="#quote">Get a free quote</a></Button>
           </div>
         </div>
       </div>
@@ -380,10 +489,10 @@ function Footer() {
 function LeaveReview() {
   const { token } = useParams();
 
-  const {register, handleSubmit, setValue, watch, formState: { errors, isSubmitting }, } = useForm<ReviewInput>({
+  const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting }, } = useForm<ReviewInput>({
     resolver: zodResolver(ReviewSchema),
   });
-  
+
   const reviewText = watch("text", "");
 
   const [hoverRating, setHoverRating] = useState<number | null>(null);
@@ -393,9 +502,9 @@ function LeaveReview() {
   const onSubmit = async (data: ReviewInput) => {
     console.log("Review submitted:", data, token);
     const res = await fetch(`/api/reviews/${token}`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
     });
     const response = await res.json();
 
@@ -421,7 +530,7 @@ function LeaveReview() {
         <form className={`mt-6 grid gap-4 ${submitted ? "opacity-75" : ""}`} onSubmit={handleSubmit(onSubmit)}>
           <div>
             <label className="block text-sm font-semibold">Your name</label>
-            <Input {...register("name")} 
+            <Input {...register("name")}
               disabled={submitted}
               className={submitted ? "bg-slate-100/60" : ""}
             />
@@ -455,7 +564,7 @@ function LeaveReview() {
                     />
                   </button>
                 );
-              })} 
+              })}
               {errors.rating && (
                 <p className="mt-1 text-sm text-red-600">
                   {errors.rating.message}
@@ -466,7 +575,7 @@ function LeaveReview() {
 
           <div>
             <label className="block text-sm font-semibold">Review</label>
-            <Textarea {...register("text")} 
+            <Textarea {...register("text")}
               disabled={submitted}
               className={submitted ? "bg-slate-100/60" : ""}
             />
@@ -510,7 +619,7 @@ function Admin() {
   const [reviewUrl, setReviewUrl] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
-  
+
 
   const generateLink = async () => {
     setLoading(true);
@@ -609,25 +718,25 @@ function Admin() {
 export default function App() {
   return (
     <BrowserRouter>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <div className="w-full">
-                  <Nav />
-                  <Hero />
-                  <div className="h-16 bg-linear-to-r from-[#5A7ACD] to-[#ffffff]" />
-                  <Services />
-                  <Work />
-                  <Reviews />
-                  <Quote />
-                  <Footer />
-                </div>
-              }
-            />
-            <Route path="/review/:token" element={<LeaveReview />} />
-            <Route path="/admin" element={<Admin />} />
-          </Routes>
-        </BrowserRouter>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <div className="w-full">
+              <Nav />
+              <Hero />
+              <TrustBar />
+              <Services />
+              <Work />
+              <Reviews />
+              <Quote />
+              <Footer />
+            </div>
+          }
+        />
+        <Route path="/review/:token" element={<LeaveReview />} />
+        <Route path="/admin" element={<Admin />} />
+      </Routes>
+    </BrowserRouter>
   );
 }

@@ -161,3 +161,23 @@
     @apply bg-background text-foreground;
   }
 }
+
+/* ── TrustBar marquee ─────────────────────────────────────── */
+@keyframes trust-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.trust-band-track {
+  animation: trust-scroll 28s linear infinite;
+  width: max-content;
+}
+
+/* Pause when the user hovers anywhere on the band */
+section:has(.trust-band-track):hover .trust-band-track {
+  animation-play-state: paused;
+}
+
+.trust-band-card {
+  min-width: 240px;
+}

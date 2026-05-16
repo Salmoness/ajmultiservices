@@ -7,6 +7,9 @@ export default defineConfig({
   plugins: [react(), tailwind()],
   resolve: { alias: { "@": path.resolve(__dirname, "./src") } },
   server: {
+    watch: {
+      usePolling: true,
+    },
     proxy: {
       "/api": {
         target: "http://localhost:5001",
